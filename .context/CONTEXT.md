@@ -20,6 +20,12 @@ Enterprise systems are complex. Dozens of services, years of accumulated decisio
 
 Put everything in `.context/` and enforce it. Documentation becomes a first-class citizen of the codebase — reviewed in PRs, versioned in git, and always in sync with the code it describes.
 
+dotcontext is three things:
+
+1. **A standard** — a convention for structuring project context in a `.context/` directory
+2. **A CLI tool** — `dotcontext init`, `dotcontext generate`, `dotcontext import`, `dotcontext check` to scaffold, generate, migrate, and validate context
+3. **AI integrations** — Claude Code integration for AI-powered context generation, and MCP connectors for importing docs from Confluence, Notion, Jira, and other tools
+
 ## Core Principles
 
 1. **Code and context together** — if it explains the code, it belongs next to the code
