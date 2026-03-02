@@ -1,8 +1,8 @@
 # dotcontext
 
-## What is dotcontext?
+## What is this
 
-dotcontext is an open standard for storing all project documentation alongside your code in a `.context/` directory. It defines how complex, enterprise-grade systems should be covered with structured context so that agent-assisted engineering becomes a reliable, everyday practice — not a novelty.
+dotcontext is an open standard and CLI tool for storing all project documentation alongside your code in a `.context/` directory. It defines how complex, enterprise-grade systems should be covered with structured context so that agent-assisted engineering becomes a reliable, everyday practice — not a novelty.
 
 Plans, user stories, RFCs, ADRs, runbooks, onboarding guides — everything lives in the repo, versioned with git, and accessible to both humans and AI agents.
 
@@ -63,6 +63,33 @@ dotcontext is fully open source. Everyone is welcome to use, contribute to, and 
 - **Specification and documentation** — licensed under [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). You can freely adopt, share, and adapt the standard. You must give credit to dotcontext, and any derivative specifications must be shared under the same terms.
 - **Tooling and code** — licensed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). You can use dotcontext tooling in any project, including proprietary ones. Modifications to dotcontext source files themselves must be shared back under the same license.
 - **The dotcontext name** is a trademark. You can use the standard freely, but you cannot rebrand or misrepresent it as your own.
+
+## Architecture
+
+The CLI is a single Go binary built with Cobra. It operates entirely locally — no network calls, no external dependencies at runtime.
+
+```mermaid
+graph TD
+    CLI[dotcontext CLI] --> Init[init command]
+    CLI --> Check[check command]
+    Init --> Templates[Embedded templates]
+    Init --> FS[File system]
+    Check --> FS
+```
+
+Key components:
+- `cmd/dotcontext/main.go` — entry point, Cobra root command with subcommands
+- `internal/init/` — scaffolds the `.context/` directory from embedded templates
+- `internal/check/` — validates structure, required sections, naming conventions, and internal links
+- `internal/templates/` — Go `embed`-based templates compiled into the binary
+
+## Tech stack
+
+- **Language:** Go 1.25
+- **CLI framework:** Cobra
+- **Templates:** Go `embed` + `text/template`
+- **Build:** Make + `go build`
+- **Tests:** Go standard `testing` package
 
 ## Status
 

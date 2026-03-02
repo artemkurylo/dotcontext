@@ -50,13 +50,35 @@ func Run(dir string, force bool) error {
 		return fmt.Errorf("failed to write CONTEXT.md: %w", err)
 	}
 
+	// Write CLAUDE.md to project root (skip if it already exists unless --force)
+	claudeMD := filepath.Join(dir, "CLAUDE.md")
+	wroteClaudeMD := false
+	if force || !fileExists(claudeMD) {
+		claudeTmpl, err := templates.Files.ReadFile("claude.md.tmpl")
+		if err != nil {
+			return fmt.Errorf("failed to read CLAUDE.md template: %w", err)
+		}
+		if err := os.WriteFile(claudeMD, claudeTmpl, 0o644); err != nil {
+			return fmt.Errorf("failed to write CLAUDE.md: %w", err)
+		}
+		wroteClaudeMD = true
+	}
+
 	fmt.Println("Initialized .context/ directory:")
 	fmt.Println("  .context/CONTEXT.md")
 	for _, sub := range subdirs {
 		fmt.Printf("  .context/%s/\n", sub)
 	}
+	if wroteClaudeMD {
+		fmt.Println("  CLAUDE.md")
+	}
 	fmt.Println()
 	fmt.Println("Next step: edit .context/CONTEXT.md to describe your project.")
 
 	return nil
+}
+
+func fileExists(path string) bool {
+	_, err := os.Stat(path)
+	return err == nil
 }

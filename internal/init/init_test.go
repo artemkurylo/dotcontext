@@ -40,6 +40,16 @@ func TestRun_CreatesStructure(t *testing.T) {
 	if info.Size() == 0 {
 		t.Error("CONTEXT.md is empty")
 	}
+
+	// Check CLAUDE.md exists at project root and is non-empty
+	claudeMD := filepath.Join(dir, "CLAUDE.md")
+	info, err = os.Stat(claudeMD)
+	if err != nil {
+		t.Fatalf("CLAUDE.md not created: %v", err)
+	}
+	if info.Size() == 0 {
+		t.Error("CLAUDE.md is empty")
+	}
 }
 
 func TestRun_RefusesOverwrite(t *testing.T) {
@@ -68,6 +78,10 @@ func TestRun_ForceOverwrites(t *testing.T) {
 	contextMD := filepath.Join(dir, ".context", "CONTEXT.md")
 	os.WriteFile(contextMD, []byte("custom content"), 0o644)
 
+	// Modify CLAUDE.md
+	claudeMD := filepath.Join(dir, "CLAUDE.md")
+	os.WriteFile(claudeMD, []byte("custom claude content"), 0o644)
+
 	// Force init should succeed and overwrite
 	if err := Run(dir, true); err != nil {
 		t.Fatalf("force init failed: %v", err)
@@ -76,5 +90,10 @@ func TestRun_ForceOverwrites(t *testing.T) {
 	content, _ := os.ReadFile(contextMD)
 	if string(content) == "custom content" {
 		t.Error("force init did not overwrite CONTEXT.md")
+	}
+
+	claudeContent, _ := os.ReadFile(claudeMD)
+	if string(claudeContent) == "custom claude content" {
+		t.Error("force init did not overwrite CLAUDE.md")
 	}
 }

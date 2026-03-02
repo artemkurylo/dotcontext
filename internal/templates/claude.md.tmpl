@@ -1,0 +1,62 @@
+# CLAUDE.md — AI Workflow Guide
+
+This file tells AI agents how to work with this project. Read it before making changes.
+
+## Start here
+
+1. Read `.context/CONTEXT.md` for project overview, architecture, and tech stack
+2. Check `.context/adrs/` for past architectural decisions before proposing new ones
+3. Follow the workflow below for all tasks
+
+## Project structure
+
+```
+.context/
+  CONTEXT.md        # Project overview and orientation
+  plans/            # Implementation plans and roadmaps
+  stories/          # User stories and requirements
+  rfcs/             # Requests for comments on proposed changes
+  adrs/             # Architecture decision records
+  runbooks/         # Operational procedures
+  guides/           # Onboarding and how-to guides
+```
+
+<!-- Add your project's key directories below -->
+
+## Build and test
+
+<!-- Replace with your project's actual commands -->
+
+```bash
+# Build
+# <your build command>
+
+# Test
+# <your test command>
+
+# Lint
+# <your lint command>
+```
+
+## Task-type lookup
+
+| Task | Read first | Write to |
+|------|-----------|----------|
+| Plan a feature | `.context/plans/` | `.context/plans/` |
+| Record a decision | `.context/adrs/` | `.context/adrs/` |
+| Propose a change | `.context/rfcs/` | `.context/rfcs/` |
+| Fix an incident | `.context/runbooks/` | `.context/runbooks/` |
+| Onboard someone | `.context/guides/` | `.context/guides/` |
+
+## Workflow
+
+1. **Read context** — start with `.context/CONTEXT.md`, then check the relevant subdirectory for your task type
+2. **Check decisions** — review `.context/adrs/` so you don't contradict existing architectural choices
+3. **Follow conventions** — match the code style, naming, and patterns already in the codebase
+4. **Update docs** — if your change affects architecture, decisions, or operations, update the relevant `.context/` files
+5. **Validate** — run tests and lints before finishing
+
+## Code conventions
+
+<!-- Add your project's conventions below -->
+<!-- Examples: license headers, naming rules, error handling patterns, test conventions -->
